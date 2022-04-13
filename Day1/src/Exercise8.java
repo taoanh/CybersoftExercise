@@ -12,6 +12,7 @@ public class Exercise8 {
 			strBuilder.append(" ");
 			
 		}
+		strBuilder.deleteCharAt(str.length());
 		System.out.println(strBuilder.toString());
 	}
 }
