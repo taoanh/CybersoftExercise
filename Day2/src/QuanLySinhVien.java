@@ -33,6 +33,37 @@ public class QuanLySinhVien {
 		this.diaChiTamTru = diaChiTamTru;
 	}
 
+	public String getRank() {
+		if(this.diemTrungBinh >= 8) {
+			return "Hoc sinh gioi";
+		}else if(this.diemTrungBinh >= 6 && this.diemTrungBinh <8) {
+			return "Hoc sinh kha";
+		}else if(this.diemTrungBinh >= 5 && this.diemTrungBinh < 6) {
+			return "Hoc sinh trung binh";
+		}else {
+			return "Hoc sinh yeu";
+		}
+	}
+	
+	public String getMiddleName() {
+		String[] name = hoVaTenSV.split(" ");
+		StringBuilder middleName = new StringBuilder();
+		for (int i = 1; i < name.length - 1; i++) {
+			middleName.append(name[i]);
+		}
+		return middleName.toString();
+	}
+
+	public String getFirstName() {
+		String[] name = hoVaTenSV.split(" ");
+		return name[name.length - 1];
+	}
+
+	public String getLastName() {
+		String[] name = hoVaTenSV.split(" ");
+		return name[0];
+	}
+
 	private double averagePoint(int toan, int ly, int hoa) {
 
 		return (toan + ly + hoa) / 3;
@@ -110,5 +141,12 @@ public class QuanLySinhVien {
 		if (toan >= 0 && toan <= 10 && ly >= 0 && ly <= 10 && hoa >= 0 && hoa <= 10) {
 			this.diemTrungBinh = averagePoint(toan, ly, hoa);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "QuanLySinhVien [maSV=" + maSV + ", hoVaTenSV=" + hoVaTenSV + ", ngayThangNamSinh=" + ngayThangNamSinh
+				+ ", gioiTinh=" + gioiTinh + ", soDienThoai=" + soDienThoai + ", email=" + email + ", diaChiThuongTru="
+				+ diaChiThuongTru + ", diaChiTamTru=" + diaChiTamTru + ", diemTrungBinh=" + diemTrungBinh + "]";
 	}
 }
