@@ -1,4 +1,4 @@
-
+package Day2;
 public class Day2Exercise {
 	public static void main(String[] args) {
 
