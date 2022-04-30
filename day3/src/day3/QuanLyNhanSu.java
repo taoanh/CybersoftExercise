@@ -1,9 +1,11 @@
 package day3;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 public class QuanLyNhanSu {
 	private Company company;
@@ -11,6 +13,9 @@ public class QuanLyNhanSu {
 	private List<TruongPhong> listTruongPhong;
 	private List<GiamDoc> listGiamDoc;
 
+	
+	private static final   SimpleDateFormat  FORMATTER = new SimpleDateFormat("ddMyyyy-hhmmss"); 
+	
 	public QuanLyNhanSu() {
 		listNhanVien = new ArrayList<>();
 		listTruongPhong = new ArrayList<>();
@@ -24,47 +29,90 @@ public class QuanLyNhanSu {
 		listGiamDoc = new ArrayList<>();
 	}
 
-	public Boolean addNhanVien(NhanVien addNhanVien) {
-		if (!checkAvailable(addNhanVien.getId())) {
+	public Boolean addNhanVien(String name, String phone, int workingDays) {
+		if (!checkAvailable(phone)) {
 			return false;
 		}
-		listNhanVien.add(addNhanVien);
+		Date date = new Date();  
+		String id = "NV" + FORMATTER.format(date);
+		NhanVien nhanVien = new NhanVien(id, name, phone, workingDays);
+		listNhanVien.add(nhanVien);
 		return true;
 	}
 
-	public boolean addTruongPhong(TruongPhong addTruongPhong) {
-		if (!checkAvailable(addTruongPhong.getId())) {
+	public Boolean addNhanVien(String name, String phone, int workingDays, String idTruongPhong) {
+		if (!checkAvailable(phone)) {
 			return false;
 		}
-		listTruongPhong.add(addTruongPhong);
+		TruongPhong linkTruongPhong = null;
+		for (TruongPhong truongPhong : listTruongPhong) {
+			if (truongPhong.equals(idTruongPhong)) {
+				linkTruongPhong = truongPhong;
+			}
+		}
+		if (linkTruongPhong == null) {
+			return false;
+		}
+		Date date = new Date(); 
+		String id = "NV" + FORMATTER.format(date);
+		NhanVien nhanVien = new NhanVien(id, name, phone, workingDays, linkTruongPhong);
+		listNhanVien.add(nhanVien);
+		return true;
+	}
+
+	public boolean addTruongPhongByNhanVien(String idNhanVien) {
+		NhanVien targetNhanVien = null;
+		for (int i = 0; i < listNhanVien.size(); i++) {
+			NhanVien nhanVien = listNhanVien.get(i);
+			if (nhanVien.equals(idNhanVien)) {
+				targetNhanVien = nhanVien;
+				listNhanVien.remove(i);
+			}
+		}
+		if (targetNhanVien == null) {
+			return false;
+		}
+		addTruongPhong(targetNhanVien.getFullName(),targetNhanVien.getPhone(),targetNhanVien.getWorkingDays());
+		return true;
+	}
+
+	public boolean addTruongPhong(String name, String phone, int workingDays) {
+		if (!checkAvailable(phone)) {
+			return false;
+		}
+		Date date = new Date(); 
+		String idTP = "TP" + FORMATTER.format(date);
+		listTruongPhong.add(new TruongPhong(idTP, name, phone, workingDays));
 		return true;
 
 	}
 
-	public boolean addGiamDoc(GiamDoc giamDoc) {
-		if (!checkAvailable(giamDoc.getId())) {
+	public boolean addGiamDoc(String name, String phone, int workingDays,int companyStock) {
+		if (!checkAvailable(phone)) {
 			return false;
 		}
-		listGiamDoc.add(giamDoc);
+		Date date = new Date(); 
+		String idTP = "TP" + FORMATTER.format(date);
+		listGiamDoc.add(new GiamDoc(idTP, name, phone, workingDays,companyStock));
 		return true;
 	}
 
-	private boolean checkAvailable(String id) {
+	private boolean checkAvailable(String phone) {
 		for (GiamDoc giamDoc : listGiamDoc) {
-			if (giamDoc.equals(id)) {
+			if (giamDoc.getPhone().equals(phone)) {
 				System.out.println("Da co nhan vien nay co chuc vu la giam doc");
 				return false;
 			}
 		}
 		for (TruongPhong truongPhong : listTruongPhong) {
-			if (truongPhong.equals(id)) {
+			if (truongPhong.getPhone().equals(phone)) {
 				System.out.println("Da co nhan vien nay co chuc vu la truong phong");
 				return false;
 			}
 		}
 
 		for (NhanVien nhanVien : listNhanVien) {
-			if (nhanVien.equals(id)) {
+			if (nhanVien.getPhone().equals(phone)) {
 				System.out.println("Da co nhan vien nay co chuc vu la nhan vien");
 				return false;
 			}
@@ -82,6 +130,10 @@ public class QuanLyNhanSu {
 		for (int i = 0; i < listTruongPhong.size(); i++) {
 			if (listTruongPhong.get(i).equals(id)) {
 				listTruongPhong.remove(i);
+				for (NhanVien nhanVien : listNhanVien) {
+					nhanVien.getTruongPhong().equals(id);
+					nhanVien.setTruongPhong(null);
+				}
 				return true;
 			}
 		}
@@ -180,36 +232,35 @@ public class QuanLyNhanSu {
 		}
 		return highestStockGiamDoc;
 	}
-	
+
 	public void printRevenueGiamDocs() {
 		for (GiamDoc giamDoc : listGiamDoc) {
 			System.out.println(giamDoc.toString());
-			System.out.println("Thu Nhap: "+getRevenueGiamDoc(giamDoc));
+			System.out.println("Thu Nhap: " + getRevenueGiamDoc(giamDoc));
 			System.out.println();
 		}
-		
+
 	}
-	
+
 	public double getRevenueGiamDoc(GiamDoc giamDoc) {
-		return (double)(giamDoc.calculateSalary() 
-				+ giamDoc.getCompanyStocks()
-				*(company.getMonthRevenue()-tongLuongToanCongTyTrongThang())/100 );
+		return (double) (giamDoc.calculateSalary()
+				+ giamDoc.getCompanyStocks() * (company.getMonthRevenue() - tongLuongToanCongTyTrongThang()) / 100);
 	}
-	
-	public int tongLuongToanCongTyTrongThang () {
+
+	public int tongLuongToanCongTyTrongThang() {
 		int sum = 0;
 		for (GiamDoc giamDoc : listGiamDoc) {
 			sum += giamDoc.calculateSalary();
 		}
-		
+
 		for (NhanVien nhanVien : listNhanVien) {
 			sum += nhanVien.calculateSalary();
 		}
-		
+
 		for (TruongPhong truongPhong : listTruongPhong) {
 			sum += truongPhong.calculateSalary();
 		}
-		
+
 		return sum;
 	}
 

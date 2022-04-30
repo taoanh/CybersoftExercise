@@ -58,8 +58,8 @@ public abstract class AbstractNhanVien {
 		this.luong = luong;
 	}
 
-	public boolean equals(String id) {
-		return this.id.equals(id) ? true : false;
+	public boolean equals(String phone) {
+		return this.id.equals(phone) ? true : false;
 	}
 
 	@Override

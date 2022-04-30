@@ -8,8 +8,8 @@ public class NhanVien extends AbstractNhanVien {
 		this.truongPhong = null;
 	}
 	
-	public NhanVien(String id, String fullName, String phone, int workingDays, int luong, TruongPhong truongPhong) {
-		super(id, fullName, phone, workingDays, luong);
+	public NhanVien(String id, String fullName, String phone, int workingDays, TruongPhong truongPhong) {
+		super(id, fullName, phone, workingDays, 100);
 		this.truongPhong = truongPhong;
 	}
 
