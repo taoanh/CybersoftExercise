@@ -1,4 +1,4 @@
-package day3;
+ package day3;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,6 +93,9 @@ public class QuanLyNhanSu {
 		}
 		Date date = new Date(); 
 		String idTP = "TP" + FORMATTER.format(date);
+		if(companyStock>100) {
+			return false;
+		}
 		listGiamDoc.add(new GiamDoc(idTP, name, phone, workingDays,companyStock));
 		return true;
 	}
@@ -168,11 +171,9 @@ public class QuanLyNhanSu {
 		for (GiamDoc giamDoc : listGiamDoc) {
 			amount += giamDoc.calculateSalary();
 		}
-		System.out.println("Thong tin cac truong phong: \n");
 		for (TruongPhong truongPhong : listTruongPhong) {
 			amount += truongPhong.calculateSalary();
 		}
-		System.out.println("Thong tin cac Nhan vien: \n");
 		for (NhanVien nhanVien : listNhanVien) {
 			amount += nhanVien.calculateSalary();
 		}
@@ -202,7 +203,7 @@ public class QuanLyNhanSu {
 	}
 
 	public void sortEmployeeByName() {
-		Collections.sort(listNhanVien, (a, b) -> (a.getFullName()).compareTo(b.getFullName()));
+		Collections.sort(listNhanVien, (NhanVien a,NhanVien b) -> (a.getFullName()).compareTo(b.getFullName()));
 		Collections.sort(listTruongPhong, (a, b) -> (a.getFullName()).compareTo(b.getFullName()));
 		Collections.sort(listGiamDoc, (a, b) -> (a.getFullName()).compareTo(b.getFullName()));
 	}

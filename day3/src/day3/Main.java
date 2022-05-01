@@ -23,94 +23,104 @@ public class Main {
 			case 1:
 				qlns.showAllEmploy();
 				System.out.println("Nhap id nhan vien muon phan vao truong phong");
-				boolean success = qlns.addTruongPhongByNhanVien(SC.nextLine());
+				String idTruongPhong = SC.next();
+				boolean success = qlns.addTruongPhongByNhanVien(idTruongPhong);
 				if (!success) {
 					System.out.println("Thong tin nhap sai");
 				}
 				break;
 			case 2:
-				boolean add = false;
-				boolean remove = false;
 				System.out.println("Nhap chuc nang them hoac xoa: \r\n" + "1)Them.\r\n" + "2)Xoa.\r\n" + "PRESS: ");
 				switch (SC.nextInt()) {
 				case 1: {
-					add = true;
+					System.out.println("Nhap ho va ten nhan vien:");
+					String fullName = SC.next();
+					System.out.println("Nhap so dien thoai:");
+					String phone = SC.next();
+					System.out.println("Nhap so ngay lam viec");
+					int workingDays = SC.nextInt();
+					System.out.println("Nhap chuc vu: \r\n" + "1) Nhan vien. \r\n" + "2) Truong phong \r\n"
+							+ "3) Giam doc \r\n" + "Press: ");
+					switch (SC.nextInt()) {
+					case 1: {			
+						System.out.println("1) Co truong phong \r\n"
+								+ "2) Khong co truong phong");
+						int truongPhong = SC.nextInt();
+						switch (truongPhong) {
+						case 1: {
+							qlns.showAllEmploy();
+							System.out.println("Nhap id truong phong");
+							String idTP = SC.next(); 
+							qlns.addNhanVien(fullName, phone, workingDays, idTP);
+							break;
+							
+						}
+						case 2: {
+							qlns.addNhanVien(fullName, phone, workingDays);
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + truongPhong);
+						}
+						qlns.addNhanVien(fullName, phone, workingDays);
+						break;
+					}
+					case 2: {			
+						qlns.addTruongPhong(fullName, phone, workingDays);
+						break;
+					}
+					case 3: {
+						System.out.println("So co phan giam doc so huu");
+						int stocks = SC.nextInt();
+						qlns.addGiamDoc(fullName, phone, workingDays, stocks);
+						break;
+					}
+					default:
+						System.out.println("Nhap sai:");
+					}
 					break;
 				}
 				case 2: {
-					remove = true;
+					qlns.showAllEmploy();
+					System.out.println("Nhap id muon xoa");
+					
+					qlns.removeEmploy(SC.next());
 					break;
 				}
 				default:
 					System.out.println("Nhap sai.");
-				}
-				if (!add && !remove) {
-					break;
-				}
-				String chucVu = "";
-				System.out.println("Nhap chuc vu: \r\n" + "1) Nhan vien. \r\n" + "2) Truong phong \r\n"
-						+ "3) Giam doc \r\n" + "Press: ");
-				switch (SC.nextInt()) {
-				case 1: {
-					chucVu = "NhanVien";
-					break;
-				}
-				case 2: {
-					chucVu = "TruongPhong";
-					break;
-				}
-				case 3: {
-					chucVu = "GiamDoc";
-					break;
-				}
-				default:
-					System.out.println("Nhap sai:");
-				}
-				if (chucVu.equals("NhanVien")) {
-					if(add) {
-						
-					}else if(remove) {
-						
-					}
-				} else if (chucVu.equals("TruongPhong")) {
-
-				} else if (chucVu.equals("GiamDoc")) {
-
-				} else {
-					break;
-				}
+				}		
 				break;
+			
 			case 3:
-
+				qlns.showAllEmploy();
 				break;
 			case 4:
-
+				qlns.amountSalary();
 				break;
 			case 5:
-
+				qlns.highestSalaryNhanVien();
 				break;
 			case 6:
-
+				qlns.truongPhongNhanVienNhieuNhat();
 				break;
 			case 7:
-
+				qlns.sortEmployeeByName();
 				break;
 			case 8:
-
+				qlns.sortEmployeeBySalary();
 				break;
 			case 9:
-
+				qlns.getHighestStock();
 				break;
 			case 10:
-
+				qlns.printRevenueGiamDocs();
 				break;
 			case 11:
-
-				break;
-			case 12:
-
+				exit = true;
 				break;
 			default:
+				System.out.println("Nhap sai.");
 				break;
 			}
 		} while (!exit);
