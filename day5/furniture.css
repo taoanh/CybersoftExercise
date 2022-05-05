@@ -32,3 +32,33 @@
 		background-position:center center;
 		background-clip:content-box;
 	}
+	.intro-text{
+		font-size:20px;
+		color:grey;
+		font-weight:bold;
+		line-height: 30px;
+		letter-spacing:2px;
+		text-indent:40px;
+		text-align:justify;
+	}
+	
+	.intro-product-left,.intro-product-right{
+		float:left;
+		width:50%;
+	}
+	
+	.intro-product-item{
+		float:left;
+		padding:10px
+	}
+	
+	.intro-product-item-1{
+		width:47%;
+	}
+	.intro-product-item-2{
+		width:100%;
+	}
+	.intro-product-item img{
+		width:100%;
+		display:block;
+	}
