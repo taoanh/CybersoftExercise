@@ -53,7 +53,7 @@
 	}
 	
 	.intro-product-item-1{
-		width:47%;
+		width:48%;
 	}
 	.intro-product-item-2{
 		width:100%;
@@ -62,3 +62,93 @@
 		width:100%;
 		display:block;
 	}
+	#product >  h1{
+		text-align: center
+	}
+	.product-item{
+		width:25%;
+		padding: 0 10px;
+		float: left;
+		box-sizing: border-box;
+	}
+	.item-img{
+		max-width: 100%;
+	}
+	.item-title{
+		font-weight: bold;
+		font-size:25px;
+	}
+	.item-content{
+		font-size: 17px;
+		color: #000000;
+	}
+	.item-btn{
+		background-color:#ff0000;
+		border:1px  solid #ff0000;
+		color: white;
+	}
+	.clear{
+		clear:both;
+	}
+	#banner{
+		height: 400px;
+		background-image: url(img/nature.jpg);
+		background-size: cover;
+		position: relative;
+	}
+
+	#banner .saleoff{
+		height: 300px;
+		width: 300px;
+		background-color: rgba(255,0,0,0.6);
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius:50%;
+		position: absolute;
+		top: 10%;
+		left: 15%;
+	}
+	#banner .saleoff p:nth-child(2){
+		font-size:50px;
+		margin:10px 0;
+	}
+	
+	#banner .saleoff h2, #banner .saleoff p{
+		color: white;
+		text-align: center;
+	}
+	#banner .saleoff h2{
+		margin-top: 70px;
+	}
+	#service{
+		width:60%;
+		margin:20px auto;
+	}
+	.service_item{
+		width:33.333333%;
+		float:left;
+		text-align: center;
+	}
+	.service_item i{
+		font-size:40px;
+		color: black;
+	}
+	#footer{
+		background-color: #0D1524;
+		padding-top: 1px;
+		padding-bottom:30px;
+	}
+	#footer h2{
+		color: white;
+		text-align: center;
+	}
+	#footer div{
+		color: white;
+		text-align: center;
+	}
+	#footer div p{
+		margin-bottom:-15px
+	}
+	
+	
+	
